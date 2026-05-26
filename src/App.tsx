@@ -1,7 +1,15 @@
+import BarraLateral from './containers/BarraLateral'
+import ListaDeTarefas from './containers/ListaDeTarefas'
+import EstiloGlobal, { Container } from './styles'
+
 function App() {
   return (
-    <div className="App">
-      <h1>Olá, mundo</h1>
+    <div>
+      <EstiloGlobal />
+      <Container>
+        <BarraLateral />
+        <ListaDeTarefas />
+      </Container>
     </div>
   )
 }

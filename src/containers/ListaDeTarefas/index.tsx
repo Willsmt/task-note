@@ -6,7 +6,7 @@ const tarefas = [
   {
     titulo: 'estudar react',
     descricao: 'baixar fatura',
-    prioridade: 'importante',
+    prioridade: 'urgente',
     status: 'pedente'
   },
   {
@@ -18,8 +18,8 @@ const tarefas = [
   {
     titulo: 'ir para academia',
     descricao: 'baixar fatura',
-    prioridade: 'importante',
-    status: 'pedente'
+    prioridade: 'normal',
+    status: 'concluida'
   }
 ]
 

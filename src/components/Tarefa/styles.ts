@@ -1,21 +1,35 @@
 import styled from 'styled-components'
-import variaveis from '../../../styles/variaveis'
+import variaveis from '../../styles/variaveis'
+import * as enums from '../../utils/enums/Tarefa'
 
-type tagProps = {
-  prioridade?: string
-  status?: string
+type TagProps = {
+  prioridade?: enums.Prioridade
+  status?: enums.Status
+  parametro: 'status' | 'prioridade'
 }
 
-function retornaCorDeFundo(props: tagProps): string {
-  if ('status' in props) {
-    if (props.status === 'pedente') return variaveis.amarelo
-    if (props.status === 'concluida') return variaveis.verde
-  } else if ('prioridade' in props) {
-    if (props.prioridade === 'urgente') return variaveis.vermelho
-    if (props.prioridade === 'importante') return variaveis.amarelo2
+function retornaCorDeFundo(props: TagProps): string {
+  if (props.parametro === 'prioridade') {
+    if (props.prioridade === enums.Prioridade.URGENTE) {
+      return variaveis.vermelho
+    }
+
+    if (props.prioridade === enums.Prioridade.IMPORTANTE) {
+      return variaveis.amarelo2
+    }
+  } else {
+    if (props.status === enums.Status.PENDENTE) {
+      return variaveis.amarelo
+    }
+
+    if (props.status === enums.Status.CONCLUIDA) {
+      return variaveis.verde
+    }
   }
+
   return '#ccc'
 }
+
 export const Card = styled.div`
   background-color: #fcfcfc;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -30,7 +44,7 @@ export const Titulo = styled.h3`
   margin-bottom: 16px;
 `
 
-export const Tag = styled.span<tagProps>`
+export const Tag = styled.span<TagProps>`
   padding: 4px 8px;
   color: #fff;
   font-weight: bold;
@@ -51,12 +65,12 @@ export const Descricao = styled.textarea`
   margin-bottom: 16px;
   margin-top: 16px;
   resize: none;
-  border; none;
-  background-color:transparent
+  border: none;
+  background-color: transparent;
 `
 
 export const BarraAcoes = styled.div`
-  border-top: 1px solid rgba(0, 0, 0 0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
   padding-top: 16px;
 `
 
@@ -71,9 +85,11 @@ export const Botao = styled.button`
   border-radius: 8px;
   margin-right: 8px;
 `
+
 export const BotaoSalvar = styled(Botao)`
   background-color: ${variaveis.verde};
 `
+
 export const BotaoCancelarRemover = styled(Botao)`
   background-color: ${variaveis.vermelho};
 `

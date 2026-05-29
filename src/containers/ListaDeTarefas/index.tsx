@@ -1,44 +1,29 @@
-import Tarefa from '../components/Tarefa'
-import { Titulo } from '../components/Tarefa/styles'
+import { useSelector } from 'react-redux'
+import Tarefa from '../../components/Tarefa'
 import { Container } from './styles'
+import { RootReducer } from '../../store'
 
-const tarefas = [
-  {
-    titulo: 'estudar react',
-    descricao: 'baixar fatura',
-    prioridade: 'urgente',
-    status: 'pedente'
-  },
-  {
-    titulo: 'pagar conta',
-    descricao: 'baixar fatura',
-    prioridade: 'importante',
-    status: 'pedente'
-  },
-  {
-    titulo: 'ir para academia',
-    descricao: 'baixar fatura',
-    prioridade: 'normal',
-    status: 'concluida'
-  }
-]
+const ListaDeTarefas = () => {
+  const { tarefas } = useSelector((state: RootReducer) => state)
 
-const ListaDeTarefas = () => (
-  <Container>
-    <p>2 tarefas marcadas como: &quot;categoria &quot; e &quot;termo&quot;</p>
-    <ul>
-      {tarefas.map((t) => (
-        <li key={t.titulo}>
-          <Tarefa
-            descricao={t.descricao}
-            titulo={t.titulo}
-            prioridade={t.prioridade}
-            status={t.status}
-          />
-        </li>
-      ))}
-    </ul>
-  </Container>
-)
+  return (
+    <Container>
+      <p>2 tarefas marcadas como: &quot;categoria&quot; e &quot;termo&quot;</p>
+
+      <ul>
+        {tarefas.map((t) => (
+          <li key={t.titulo}>
+            <Tarefa
+              descricao={t.descricao}
+              titulo={t.titulo}
+              prioridade={t.prioridade}
+              status={t.status}
+            />
+          </li>
+        ))}
+      </ul>
+    </Container>
+  )
+}
 
 export default ListaDeTarefas

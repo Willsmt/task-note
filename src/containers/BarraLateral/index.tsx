@@ -1,4 +1,4 @@
-import FiltroCard from '../components/FiltroCard'
+import FiltroCard from '../../components/FiltroCard'
 import * as S from './styles'
 
 const BarraLateral = () => (

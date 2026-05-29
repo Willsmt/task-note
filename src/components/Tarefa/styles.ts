@@ -3,50 +3,56 @@ import variaveis from '../../styles/variaveis'
 import * as enums from '../../utils/enums/Tarefa'
 
 type TagProps = {
-  prioridade?: enums.Prioridade
-  status?: enums.Status
-  parametro: 'status' | 'prioridade'
+  $prioridade?: enums.Prioridade
+  $status?: enums.Status
+  $parametro: 'status' | 'prioridade'
 }
 
 function retornaCorDeFundo(props: TagProps): string {
-  if (props.parametro === 'prioridade') {
-    if (props.prioridade === enums.Prioridade.URGENTE) {
+  if (props.$parametro === 'prioridade') {
+    if (props.$prioridade === enums.Prioridade.URGENTE) {
       return variaveis.vermelho
     }
 
-    if (props.prioridade === enums.Prioridade.IMPORTANTE) {
+    if (props.$prioridade === enums.Prioridade.IMPORTANTE) {
       return variaveis.amarelo2
     }
   } else {
-    if (props.status === enums.Status.PENDENTE) {
+    if (props.$status === enums.Status.PENDENTE) {
       return variaveis.amarelo
     }
 
-    if (props.status === enums.Status.CONCLUIDA) {
+    if (props.$status === enums.Status.CONCLUIDA) {
       return variaveis.verde
     }
   }
 
-  return '#ccc'
+  return variaveis.cinzaMedio
 }
 
 export const Card = styled.div`
-  background-color: #fcfcfc;
+  background-color: ${variaveis.cinzaClaro};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding: 16px;
   margin-bottom: 32px;
   border-radius: 16px;
+
+  label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
 `
 
 export const Titulo = styled.h3`
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 16px;
+  margin-left: 8px;
 `
 
 export const Tag = styled.span<TagProps>`
   padding: 4px 8px;
-  color: #fff;
+  color: ${variaveis.branco};
   font-weight: bold;
   font-size: 10px;
   background-color: ${(props) => retornaCorDeFundo(props)};
@@ -56,7 +62,7 @@ export const Tag = styled.span<TagProps>`
 `
 
 export const Descricao = styled.textarea`
-  color: #8b8b8b;
+  color: ${variaveis.cinzaTexto};
   font-size: 14px;
   line-height: 24px;
   font-family: 'Roboto Mono', monospace;
@@ -77,11 +83,11 @@ export const BarraAcoes = styled.div`
 export const Botao = styled.button`
   font-weight: bold;
   font-size: 12px;
-  color: #fff;
+  color: ${variaveis.branco};
   padding: 8px 12px;
   border: none;
   cursor: pointer;
-  background-color: #2f3640;
+  background-color: ${variaveis.preto};
   border-radius: 8px;
   margin-right: 8px;
 `

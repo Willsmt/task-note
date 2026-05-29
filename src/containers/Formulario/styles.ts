@@ -6,7 +6,7 @@ export const Form = styled.form`
   width: 100%;
   font-weight: bold;
   font-size: 14px;
-  color: #666;
+  color: ${variaveis.cinzaTexto};
 
   display: flex;
   flex-direction: column;
@@ -16,13 +16,13 @@ export const Form = styled.form`
     margin: 16px 0;
     padding: 12px;
     border-radius: 6px;
-    border: 1px solid #ccc;
+    border: 1px solid ${variaveis.cinzaMedio};
     font-size: 16px;
     font-family: inherit;
 
     &:focus {
       outline: none;
-      border-color: #44bd32;
+      border-color: ${variaveis.verde};
       box-shadow: 0 0 6px rgba(68, 189, 50, 0.4);
     }
   }
@@ -34,7 +34,7 @@ export const Opcoes = styled.div`
   p {
     margin-bottom: 6px;
     font-weight: bold;
-    color: #333;
+    color: ${variaveis.cinzaTitulo};
   }
 
   input[type='radio'] {
@@ -50,7 +50,7 @@ export const Opcoes = styled.div`
     cursor: pointer;
     margin-right: 8px;
     transition: all 0.3s ease;
-    color: #fff; /* texto branco por padrão */
+    color: ${variaveis.branco}; /* texto branco por padrão */
   }
 
   /* Cores específicas para cada label */
@@ -72,9 +72,10 @@ export const Opcoes = styled.div`
     transform: scale(1.05);
   }
 `
+
 export const Botao = styled.button`
-  background-color: #44bd32;
-  color: #fff;
+  background-color: ${variaveis.verde};
+  color: ${variaveis.branco};
   border: none;
   border-radius: 6px;
   padding: 12px 24px;
@@ -83,7 +84,7 @@ export const Botao = styled.button`
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: #3aa62b;
+    background-color: ${variaveis.amarelo2};
     transform: scale(1.05);
     box-shadow: 0 0 10px rgba(68, 189, 50, 0.6);
   }
@@ -92,6 +93,7 @@ export const Botao = styled.button`
     transform: scale(0.98);
   }
 `
+
 export const Opcao = styled.div`
   display: inline;
   text-transform: capitalize;

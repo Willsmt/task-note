@@ -50,7 +50,7 @@ const ListaDeTarefas = () => {
 
   return (
     <MainContainer>
-      <Titulo as="P">{mensagem}</Titulo>
+      <Titulo as="p">{mensagem}</Titulo>
 
       <ul>
         {tarefas.map((t) => (

@@ -1,13 +1,14 @@
 import styled, { createGlobalStyle } from 'styled-components'
-const EstiloGlobal = createGlobalStyle`
-*{
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-font-family: Roboto, sans-serif;
-list-style: none;
-}
+import variaveis from './variaveis'
 
+const EstiloGlobal = createGlobalStyle`
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Roboto, sans-serif;
+    list-style: none;
+  }
 `
 
 export const Container = styled.div`
@@ -20,21 +21,23 @@ export const MainContainer = styled.main`
   height: 100vh;
   overflow-y: scroll;
 `
+
 export const Titulo = styled.h2`
   display: block;
   margin-top: 40px;
   margin-bottom: 40px;
   font-size: 18px;
   font-weight: bold;
+  color: ${variaveis.cinzaTitulo};
 `
 
 export const Campo = styled.input`
   padding: 8px;
-  background-color: #fff;
+  background-color: ${variaveis.branco};
   border-radius: 8px;
   font-weight: bold;
-  color: #666666;
-  border-color: #666666;
+  color: ${variaveis.cinzaTexto};
+  border: 1px solid ${variaveis.cinzaTexto};
   width: 100%;
 `
 

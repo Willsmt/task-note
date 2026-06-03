@@ -1,13 +1,15 @@
-import { useSelector } from 'react-redux'
 import Tarefa from '../../components/Tarefa'
+import AlertBanner from '../../components/AlertBanner'
+import { BotaoLimpar } from './styles'
 import { MainContainer, Titulo } from '../../styles/index'
-import { RootReducer } from '../../store'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { limparAlertas } from '../../store/reducers/kira'
 
 const ListaDeTarefas = () => {
-  const { itens } = useSelector((state: RootReducer) => state.tarefas)
-  const { termo, criterio, valor } = useSelector(
-    (state: RootReducer) => state.filtro
-  )
+  const dispatch = useAppDispatch()
+  const { itens } = useAppSelector((state) => state.tarefas)
+  const { termo, criterio, valor } = useAppSelector((state) => state.filtro)
+  const { ativo: kiraAtivo, alertas } = useAppSelector((state) => state.kira)
 
   const filtraTarefas = () => {
     let tarefasFiltradas = itens
@@ -52,6 +54,24 @@ const ListaDeTarefas = () => {
     <MainContainer>
       <Titulo as="p">{mensagem}</Titulo>
 
+      {kiraAtivo && alertas.length > 0 && (
+        <div>
+          {alertas.map((a) => (
+            <AlertBanner
+              key={a.id}
+              titulo={`Punição: ${a.tituloTarefa}`}
+              mensagem={a.mensagem}
+              selo={`Log Kira · ${new Date(a.timestamp).toLocaleString(
+                'pt-BR'
+              )}`}
+            />
+          ))}
+          <BotaoLimpar onClick={() => dispatch(limparAlertas())}>
+            Limpar log de punições
+          </BotaoLimpar>
+        </div>
+      )}
+
       <ul>
         {tarefas.map((t) => (
           <li key={t.id}>
@@ -61,6 +81,7 @@ const ListaDeTarefas = () => {
               titulo={t.titulo}
               prioridade={t.prioridade}
               status={t.status}
+              prazoFinal={t.prazoFinal}
             />
           </li>
         ))}

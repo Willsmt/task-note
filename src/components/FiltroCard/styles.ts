@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import variaveis from '../../styles/variaveis'
 
 type Props = {
   $ativo: boolean
@@ -8,10 +7,11 @@ type Props = {
 export const Card = styled.div<Props>`
   padding: 8px;
   border: 1px solid
-    ${(props) => (props.$ativo ? variaveis.azul : variaveis.cinzaMedio)};
+    ${(props) => (props.$ativo ? props.theme.azul : props.theme.borda)};
   background-color: ${(props) =>
-    props.$ativo ? variaveis.branco : variaveis.cinzaClaro};
-  color: ${(props) => (props.$ativo ? variaveis.azul : variaveis.cinzaEscuro)};
+    props.$ativo ? props.theme.superficieAlta : props.theme.superficie};
+  color: ${(props) =>
+    props.$ativo ? props.theme.azul : props.theme.textoFraco};
   border-radius: 8px;
   cursor: pointer;
 `

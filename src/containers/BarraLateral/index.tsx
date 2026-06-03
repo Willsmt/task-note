@@ -1,11 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import FiltroCard from '../../components/FiltroCard'
 import * as S from './styles'
 import { alterarTermo } from '../../store/reducers/filtro'
-import { RootReducer } from '../../store'
+import { abrirModal, desativarKira } from '../../store/reducers/kira'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import * as enums from '../../utils/enums/Tarefa'
 import { Campo } from '../../styles'
+import { mockUser } from '../../mocks/users'
 
 type Props = {
   mostrarFiltros: boolean
@@ -13,11 +14,28 @@ type Props = {
 
 const BarraLateral = ({ mostrarFiltros }: Props) => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const { termo } = useSelector((state: RootReducer) => state.filtro)
+  const dispatch = useAppDispatch()
+  const termo = useAppSelector((state) => state.filtro.termo)
+  const kiraAtivo = useAppSelector((state) => state.kira.ativo)
+
+  const alternarKira = () => {
+    if (kiraAtivo) {
+      dispatch(desativarKira())
+    } else {
+      dispatch(abrirModal())
+    }
+  }
 
   return (
     <S.Aside>
+      <S.Usuario>
+        <S.Avatar aria-hidden="true">{mockUser.name.charAt(0)}</S.Avatar>
+        <S.UsuarioInfo>
+          <strong>{mockUser.name}</strong>
+          <span>{mockUser.role}</span>
+        </S.UsuarioInfo>
+      </S.Usuario>
+
       <div>
         {mostrarFiltros ? (
           <>
@@ -37,6 +55,11 @@ const BarraLateral = ({ mostrarFiltros }: Props) => {
                 valor={enums.Status.CONCLUIDA}
                 criterio="status"
                 legenda="concluídas"
+              />
+              <FiltroCard
+                valor={enums.Status.FRACASSOU}
+                criterio="status"
+                legenda="fracassadas"
               />
               <FiltroCard
                 valor={enums.Prioridade.URGENTE}
@@ -62,6 +85,10 @@ const BarraLateral = ({ mostrarFiltros }: Props) => {
           </S.BotaoVoltar>
         )}
       </div>
+
+      <S.BotaoKira $ativo={kiraAtivo} onClick={alternarKira}>
+        {kiraAtivo ? 'Desativar Modo Kira' : 'Ativar Modo Kira'}
+      </S.BotaoKira>
     </S.Aside>
   )
 }

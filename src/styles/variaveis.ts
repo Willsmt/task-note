@@ -14,4 +14,10 @@ const variaveis = {
   azul: '#1e90ff' // Azul usado nos filtros ativos
 }
 
+/** Larguras máximas usadas nas media queries (mobile-friendly). */
+export const breakpoints = {
+  tablet: '768px',
+  celular: '480px'
+}
+
 export default variaveis

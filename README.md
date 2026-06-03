@@ -9,6 +9,7 @@ Projeto desenvolvido no módulo de **React da EBAC**.
 ## ✨ Funcionalidades
 
 ### Modo normal
+
 - ✅ Criar, editar e remover tarefas
 - 🏷️ Prioridades: **urgente**, **importante** e **normal**
 - 🔄 Status: **pendente**, **concluída** e **fracassou**
@@ -17,7 +18,9 @@ Projeto desenvolvido no módulo de **React da EBAC**.
 - 💾 Persistência automática no **localStorage** (sem backend)
 
 ### Modo Kira 🔴
+
 Ativado por um botão na barra lateral, com um **modal de aceite de termos** (o "pacto"). Ao ativar:
+
 - 🎨 Toda a interface troca para o tema escuro **"Obsidian Crimson"**
 - ⏳ Toda tarefa pendente ganha um cronômetro (usa o prazo da tarefa ou um **prazo padrão de 25 min**)
 - ⚠️ Quando o tempo esgota, a tarefa é marcada como **fracassou**, gera um **alerta de procrastinação** e exibe uma **Sentença do Caderno** (frase motivacional aleatória)
@@ -27,15 +30,15 @@ Ativado por um botão na barra lateral, com um **modal de aceite de termos** (o 
 
 ## 🛠️ Tecnologias
 
-| Categoria | Ferramenta |
-|---|---|
-| Biblioteca de UI | **React 18** |
-| Linguagem | **TypeScript** |
-| Estado global | **Redux Toolkit** + **React Redux** |
-| Rotas | **React Router DOM 7** |
-| Estilização | **styled-components** (com theming) |
-| Build/Toolchain | **Create React App** (react-scripts) |
-| Qualidade | **ESLint** + **Prettier** |
+| Categoria        | Ferramenta                           |
+| ---------------- | ------------------------------------ |
+| Biblioteca de UI | **React 18**                         |
+| Linguagem        | **TypeScript**                       |
+| Estado global    | **Redux Toolkit** + **React Redux**  |
+| Rotas            | **React Router DOM 7**               |
+| Estilização      | **styled-components** (com theming)  |
+| Build/Toolchain  | **Create React App** (react-scripts) |
+| Qualidade        | **ESLint** + **Prettier**            |
 
 > Aplicação **front-end only**: não há servidor. Os dados nascem de _mocks_ e são persistidos no `localStorage` do navegador.
 

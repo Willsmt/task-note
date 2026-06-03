@@ -1,4 +1,5 @@
 import styled, { css, keyframes } from 'styled-components'
+import { breakpoints } from '../../styles/variaveis'
 
 const pulsar = keyframes`
   0%, 100% { opacity: 1; }
@@ -24,6 +25,10 @@ export const Relogio = styled.div<RelogioProps>`
   border: 1px solid ${(props) => props.theme.borda};
   background-color: ${(props) => props.theme.superficie};
   color: ${(props) => props.theme.textoForte};
+
+  @media (max-width: ${breakpoints.celular}) {
+    margin-top: 12px;
+  }
 
   ${(props) =>
     props.$critico &&

@@ -1,5 +1,5 @@
-import type { Note } from '@/types/domain';
-import { DAY, HOUR, type IsoFromOffset } from './time';
+import type { Note } from '@/types/domain'
+import { DAY, HOUR, type IsoFromOffset } from './time'
 
 /** Notas simuladas, vinculadas às tarefas (editor estilo Obsidian). */
 export const mockNotes = (iso: IsoFromOffset): Note[] => [
@@ -22,8 +22,8 @@ export const mockNotes = (iso: IsoFromOffset): Note[] => [
       '',
       '> Nota Crítica: qualquer desvio do alvo dispara uma reavaliação automática do processo atual.',
       '',
-      'Continuando a análise...',
-    ].join('\n'),
+      'Continuando a análise...'
+    ].join('\n')
   },
   {
     id: 'note_schema',
@@ -37,7 +37,7 @@ export const mockNotes = (iso: IsoFromOffset): Note[] => [
       'Definir as tabelas principais e relações antes de iniciar as migrações.',
       '',
       '- Usuários, Tarefas, Notas e Projetos.',
-      '- Índices em `dueDate` e `status`.',
-    ].join('\n'),
-  },
-];
+      '- Índices em `dueDate` e `status`.'
+    ].join('\n')
+  }
+]

@@ -47,7 +47,14 @@ const KiraTimer = ({ tarefaId, titulo, prazoFinal }: Props) => {
       ).toISOString()
       dispatch(definirPrazoTarefa({ id: tarefaId, prazo: novoPrazo }))
     }
-  }, [kiraAtivo, prazoFinal, prazoArmazenado, duracaoPadrao, tarefaId, dispatch])
+  }, [
+    kiraAtivo,
+    prazoFinal,
+    prazoArmazenado,
+    duracaoPadrao,
+    tarefaId,
+    dispatch
+  ])
 
   const { segundosRestantes, expirado, formatado } =
     useContagemRegressiva(prazoEfetivo)

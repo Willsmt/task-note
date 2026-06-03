@@ -1,6 +1,6 @@
 # 📚 Documentação de Estudos — Task Note
 
-Este documento explica **a arquitetura do projeto** e **o passo a passo das funcionalidades que implementamos**, com foco em aprendizado. A ideia é que, lendo aqui, você entenda não só *o que* foi feito, mas *por quê*.
+Este documento explica **a arquitetura do projeto** e **o passo a passo das funcionalidades que implementamos**, com foco em aprendizado. A ideia é que, lendo aqui, você entenda não só _o que_ foi feito, mas _por quê_.
 
 ---
 
@@ -17,13 +17,13 @@ Essa divisão (apresentação × container) facilita o reúso: o `AlertBanner`, 
 
 ### 1.2. Estado global com Redux Toolkit
 
-O estado vive em três *slices* (fatias), cada uma num arquivo de `store/reducers/`:
+O estado vive em três _slices_ (fatias), cada uma num arquivo de `store/reducers/`:
 
-| Slice | O que guarda | Persiste? |
-|---|---|---|
-| `tarefas` | lista de tarefas (CRUD + status) | ✅ sim |
-| `filtro` | termo de busca e critério de filtro | ❌ não (é só UI) |
-| `kira` | se o Modo Kira está ativo, prazos, alertas, sentença | ✅ sim |
+| Slice     | O que guarda                                         | Persiste?        |
+| --------- | ---------------------------------------------------- | ---------------- |
+| `tarefas` | lista de tarefas (CRUD + status)                     | ✅ sim           |
+| `filtro`  | termo de busca e critério de filtro                  | ❌ não (é só UI) |
+| `kira`    | se o Modo Kira está ativo, prazos, alertas, sentença | ✅ sim           |
 
 **Por que Redux Toolkit?** Ele reduz o _boilerplate_ do Redux clássico. Com `createSlice` você escreve "mutações" diretas no estado (ex.: `state.itens.push(...)`) e o Toolkit usa o **Immer** por baixo dos panos para gerar um novo estado imutável automaticamente.
 
@@ -72,7 +72,7 @@ Os componentes acessam cores via `props.theme.x`. Como os dois temas têm **as m
 
 **Causa raiz:** o `ListaDeTarefas` renderizava cada `<Tarefa>` **sem passar** a prop `prazoFinal`. Então o `KiraTimer` recebia `undefined` e caía no prazo default.
 
-**Decisão de design:** o cronômetro deve aparecer **sempre que houver prazo**, mesmo com o Kira desligado. O Modo Kira só adiciona a *punição* (fracasso + alerta + sentença) por cima.
+**Decisão de design:** o cronômetro deve aparecer **sempre que houver prazo**, mesmo com o Kira desligado. O Modo Kira só adiciona a _punição_ (fracasso + alerta + sentença) por cima.
 
 **O que mudamos:**
 
@@ -82,6 +82,7 @@ Os componentes acessam cores via `props.theme.x`. Como os dois temas têm **as m
    {pendente && (kiraAtivo || prazoFinal) && <KiraTimer ... />}
    ```
 3. No `KiraTimer`, separamos a **contagem** (sempre que houver prazo) da **punição** (só no Kira):
+
    ```tsx
    // prazo só "default" no Kira; no modo normal precisa de prazo próprio
    const prazoEfetivo = prazoFinal ?? (kiraAtivo ? prazoArmazenado : undefined)
@@ -99,10 +100,12 @@ Os componentes acessam cores via `props.theme.x`. Como os dois temas têm **as m
 **Problema:** o ícone de calendário/relógio do `<input type="datetime-local">` só aparecia no Modo Kira.
 
 **Causa raiz:** os inputs tinham `color-scheme: dark` **fixo**. O navegador desenha o ícone do picker conforme esse `color-scheme`:
+
 - Kira (fundo escuro) → ícone claro = visível ✅
 - Normal (fundo branco) → ícone claro = invisível sobre o branco ❌
 
 **O que mudamos:** criamos um token de tema `colorScheme` (`'light'` no padrão, `'dark'` no Kira) e trocamos o valor fixo por:
+
 ```ts
 color-scheme: ${(props) => props.theme.colorScheme};
 ```
@@ -140,14 +143,14 @@ export const breakpoints = { tablet: '768px', celular: '480px' }
 
 E aplicamos `@media (max-width: ...)` nos pontos que quebravam:
 
-| Elemento | Desktop | Mobile (≤768px) |
-|---|---|---|
-| `Container` | grid `224px + auto` | **coluna única** |
-| `MainContainer` | `100vh` + scroll próprio | altura auto, scroll natural, padding menor |
-| `Aside` (barra lateral) | `100vh` | altura automática |
-| Filtros | 2 colunas | 3 (tablet) / 2 (celular) |
-| Botão "+" | 64px | 56px e mais perto das bordas |
-| Modais | padding grande | padding reduzido no celular |
+| Elemento                | Desktop                  | Mobile (≤768px)                            |
+| ----------------------- | ------------------------ | ------------------------------------------ |
+| `Container`             | grid `224px + auto`      | **coluna única**                           |
+| `MainContainer`         | `100vh` + scroll próprio | altura auto, scroll natural, padding menor |
+| `Aside` (barra lateral) | `100vh`                  | altura automática                          |
+| Filtros                 | 2 colunas                | 3 (tablet) / 2 (celular)                   |
+| Botão "+"               | 64px                     | 56px e mais perto das bordas               |
+| Modais                  | padding grande           | padding reduzido no celular                |
 
 **Pré-requisito que já existia:** a `<meta name="viewport">` no `index.html`. Sem ela, o celular renderiza a página como se fosse desktop e o `@media` não "pega".
 
@@ -170,6 +173,7 @@ E aplicamos `@media (max-width: ...)` nos pontos que quebravam:
 **Objetivo:** uma missão que fracassou não deve voltar para pendente/concluída — fica selada, só dá pra remover.
 
 **O que mudamos em `Tarefa`:**
+
 1. Checkbox desabilitado: `disabled={fracassou}`.
 2. Botão "Editar" escondido quando `fracassou` — sobra apenas "Remover".
 

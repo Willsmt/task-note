@@ -23,8 +23,8 @@ export const Form = styled.form`
 
     &:focus {
       outline: none;
-      border-color: ${(props) => props.theme.verde};
-      box-shadow: 0 0 6px ${(props) => props.theme.glowCrimson};
+      border-color: ${(props) => props.theme.foco};
+      box-shadow: 0 0 6px ${(props) => props.theme.focoGlow};
     }
   }
 `
@@ -110,6 +110,13 @@ export const CampoPrazo = styled.div`
     font-size: 14px;
     font-family: ${(props) => props.theme.fonteMono};
     color-scheme: ${(props) => props.theme.colorScheme};
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: ${(props) => props.theme.foco};
+    box-shadow: 0 0 6px ${(props) => props.theme.focoGlow};
   }
 
   small {

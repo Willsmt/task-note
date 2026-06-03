@@ -1,12 +1,13 @@
-import type { Task } from '@/types/domain';
-import { DAY, HOUR, type IsoFromOffset } from './time';
+import type { Task } from '@/types/domain'
+import { DAY, HOUR, type IsoFromOffset } from './time'
 
 /** Tarefas simuladas (inclui subtarefas hierárquicas e estados variados). */
 export const mockTasks = (iso: IsoFromOffset): Task[] => [
   {
     id: 'task_revisar',
     title: 'Revisar arquitetura Python',
-    description: 'Refatorar o serviço de processamento e validar as condições de término.',
+    description:
+      'Refatorar o serviço de processamento e validar as condições de término.',
     priority: 'urgente',
     status: 'em_progresso',
     dueDate: iso(3 * HOUR + 45 * 60 * 1000),
@@ -14,7 +15,7 @@ export const mockTasks = (iso: IsoFromOffset): Task[] => [
     noteId: 'note_termo',
     parentId: null,
     createdAt: iso(-5 * DAY),
-    completedAt: null,
+    completedAt: null
   },
   {
     id: 'task_schema',
@@ -27,7 +28,7 @@ export const mockTasks = (iso: IsoFromOffset): Task[] => [
     noteId: 'note_schema',
     parentId: null,
     createdAt: iso(-7 * DAY),
-    completedAt: null,
+    completedAt: null
   },
   {
     id: 'task_schema_sub1',
@@ -40,7 +41,7 @@ export const mockTasks = (iso: IsoFromOffset): Task[] => [
     noteId: null,
     parentId: 'task_schema',
     createdAt: iso(-6 * DAY),
-    completedAt: iso(-1 * DAY),
+    completedAt: iso(-1 * DAY)
   },
   {
     id: 'task_schema_sub2',
@@ -53,12 +54,13 @@ export const mockTasks = (iso: IsoFromOffset): Task[] => [
     noteId: null,
     parentId: 'task_schema',
     createdAt: iso(-3 * DAY),
-    completedAt: null,
+    completedAt: null
   },
   {
     id: 'task_js',
     title: 'Estudar padrões de JavaScript',
-    description: 'Revisar closures, prototypes e async/await com exemplos práticos.',
+    description:
+      'Revisar closures, prototypes e async/await com exemplos práticos.',
     priority: 'normal',
     status: 'concluida',
     dueDate: iso(-2 * DAY),
@@ -66,7 +68,7 @@ export const mockTasks = (iso: IsoFromOffset): Task[] => [
     noteId: null,
     parentId: null,
     createdAt: iso(-9 * DAY),
-    completedAt: iso(-2 * DAY),
+    completedAt: iso(-2 * DAY)
   },
   {
     id: 'task_api',
@@ -79,7 +81,7 @@ export const mockTasks = (iso: IsoFromOffset): Task[] => [
     noteId: null,
     parentId: null,
     createdAt: iso(-4 * DAY),
-    completedAt: null,
+    completedAt: null
   },
   {
     id: 'task_auth',
@@ -92,7 +94,7 @@ export const mockTasks = (iso: IsoFromOffset): Task[] => [
     noteId: null,
     parentId: null,
     createdAt: iso(-2 * DAY),
-    completedAt: null,
+    completedAt: null
   },
   {
     id: 'task_heatmap',
@@ -105,7 +107,7 @@ export const mockTasks = (iso: IsoFromOffset): Task[] => [
     noteId: null,
     parentId: null,
     createdAt: iso(-12 * DAY),
-    completedAt: iso(-4 * DAY),
+    completedAt: iso(-4 * DAY)
   },
   {
     id: 'task_ui_audit',
@@ -118,6 +120,6 @@ export const mockTasks = (iso: IsoFromOffset): Task[] => [
     noteId: null,
     parentId: null,
     createdAt: iso(-1 * DAY),
-    completedAt: null,
-  },
-];
+    completedAt: null
+  }
+]

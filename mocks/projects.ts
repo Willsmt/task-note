@@ -1,5 +1,5 @@
-import type { Project } from '@/types/domain';
-import { DAY, type IsoFromOffset } from './time';
+import type { Project } from '@/types/domain'
+import { DAY, type IsoFromOffset } from './time'
 
 /** Projetos simulados (base da tela de Projetos & Timeline). */
 export const mockProjects = (iso: IsoFromOffset): Project[] => [
@@ -9,7 +9,7 @@ export const mockProjects = (iso: IsoFromOffset): Project[] => [
     priority: 'urgente',
     progress: 64,
     startDate: iso(-6 * DAY),
-    endDate: iso(2 * DAY),
+    endDate: iso(2 * DAY)
   },
   {
     id: 'proj_timer',
@@ -17,7 +17,7 @@ export const mockProjects = (iso: IsoFromOffset): Project[] => [
     priority: 'importante',
     progress: 38,
     startDate: iso(-2 * DAY),
-    endDate: iso(9 * DAY),
+    endDate: iso(9 * DAY)
   },
   {
     id: 'proj_auth',
@@ -25,6 +25,6 @@ export const mockProjects = (iso: IsoFromOffset): Project[] => [
     priority: 'normal',
     progress: 12,
     startDate: iso(1 * DAY),
-    endDate: iso(16 * DAY),
-  },
-];
+    endDate: iso(16 * DAY)
+  }
+]

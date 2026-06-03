@@ -60,6 +60,13 @@ export const Campo = styled.input`
   color: ${(props) => props.theme.textoBase};
   border: 1px solid ${(props) => props.theme.borda};
   width: 100%;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: ${(props) => props.theme.foco};
+    box-shadow: 0 0 6px ${(props) => props.theme.focoGlow};
+  }
 `
 
 export default EstiloGlobal

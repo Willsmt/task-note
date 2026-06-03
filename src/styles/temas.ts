@@ -27,6 +27,10 @@ export type Tema = typeof variaveis & {
   acaoFundoHover: string
   /** Verdadeiro quando o Modo Kira está ativo (habilita o visual obsidiana/crimson). */
   kira: boolean
+  /** Cor de destaque ao focar campos de formulário (verde no padrão, crimson no Kira). */
+  foco: string
+  /** Brilho (box-shadow) do campo focado, no tom da cor de foco. */
+  focoGlow: string
 }
 
 /** Tema claro original ("Task Note" padrão). */
@@ -46,7 +50,9 @@ export const temaPadrao: Tema = {
   colorScheme: 'light',
   acaoFundo: variaveis.verde,
   acaoFundoHover: variaveis.amarelo2,
-  kira: false
+  kira: false,
+  foco: variaveis.verde,
+  focoGlow: 'rgba(68, 189, 50, 0.45)'
 }
 
 /**
@@ -84,5 +90,7 @@ export const temaKira: Tema = {
   colorScheme: 'dark',
   acaoFundo: '#c1121f', // crimson profundo (ação primária no Kira)
   acaoFundoHover: '#ff3131',
-  kira: true
+  kira: true,
+  foco: '#ff3131',
+  focoGlow: 'rgba(255, 49, 49, 0.45)'
 }

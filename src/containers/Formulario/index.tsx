@@ -67,14 +67,17 @@ const Formulario = () => {
           ))}
         </Opcoes>
         <CampoPrazo>
-          <label htmlFor="prazo">Prazo final do Modo Kira (data e hora)</label>
+          <label htmlFor="prazo">Prazo final (data e hora)</label>
           <input
             id="prazo"
             type="datetime-local"
             value={prazoFinal}
             onChange={(e) => setPrazoFinal(e.target.value)}
           />
-          <small>Opcional. Se vazio, usa o prazo padrão do Modo Kira.</small>
+          <small>
+            Opcional. Define o cronômetro da tarefa. Se vazio, o Modo Kira usa o
+            prazo padrão.
+          </small>
         </CampoPrazo>
         <Botao type="submit">Cadastrar</Botao>
       </Form>

@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components'
+import { breakpoints } from '../../styles/variaveis'
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -36,6 +37,10 @@ export const Modal = styled.div`
   color: #e5e2e1;
   font-family: 'Geist', 'Roboto', sans-serif;
   animation: ${subir} 0.25s ease-out;
+
+  @media (max-width: ${breakpoints.celular}) {
+    padding: 24px 20px;
+  }
 `
 
 export const Selo = styled.span`

@@ -63,6 +63,7 @@ const Tarefa = ({
           id={titulo}
           checked={status === enums.Status.CONCLUIDA}
           onChange={alteraStatusTarefa}
+          disabled={fracassou}
         />
         <S.Titulo>
           {estaEditando && <em>Editando: </em>}
@@ -78,18 +79,20 @@ const Tarefa = ({
         {status}
       </S.Tag>
 
-      {kiraAtivo && pendente && (
+      {pendente && (kiraAtivo || prazoFinal) && (
         <KiraTimer tarefaId={id} titulo={titulo} prazoFinal={prazoFinal} />
       )}
 
       {kiraAtivo && alerta && (
-        <AlertBanner
-          titulo="Procrastinação detectada"
-          mensagem={alerta.mensagem}
-          selo={`Registrado às ${new Date(alerta.timestamp).toLocaleTimeString(
-            'pt-BR'
-          )}`}
-        />
+        <S.AreaAlerta>
+          <AlertBanner
+            titulo="Procrastinação detectada"
+            mensagem={alerta.mensagem}
+            selo={`Registrado às ${new Date(
+              alerta.timestamp
+            ).toLocaleTimeString('pt-BR')}`}
+          />
+        </S.AreaAlerta>
       )}
 
       <S.Descricao
@@ -137,7 +140,9 @@ const Tarefa = ({
           </>
         ) : (
           <>
-            <S.Botao onClick={() => setEstaEditando(true)}>Editar</S.Botao>
+            {!fracassou && (
+              <S.Botao onClick={() => setEstaEditando(true)}>Editar</S.Botao>
+            )}
 
             <S.BotaoCancelarRemover onClick={() => dispatch(remover(id))}>
               Remover

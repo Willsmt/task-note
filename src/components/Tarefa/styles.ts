@@ -124,8 +124,12 @@ export const CampoPrazo = styled.div`
     color: ${(props) => props.theme.textoBase};
     font-size: 14px;
     font-family: ${(props) => props.theme.fonteMono};
-    color-scheme: dark;
+    color-scheme: ${(props) => props.theme.colorScheme};
   }
+`
+
+export const AreaAlerta = styled.div`
+  margin-top: 16px;
 `
 
 export const BarraAcoes = styled.div`

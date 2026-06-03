@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const Form = styled.form`
   max-width: 547px;
@@ -52,6 +52,13 @@ export const Opcoes = styled.div`
     margin-right: 8px;
     transition: all 0.3s ease;
     color: ${(props) => props.theme.branco};
+    font-family: ${(props) => props.theme.fontePrincipal};
+    ${(props) =>
+      props.theme.kira &&
+      css`
+        letter-spacing: 0.03em;
+        border: 1px solid ${props.theme.borda};
+      `}
   }
 
   /* Cores específicas para cada label */
@@ -69,8 +76,16 @@ export const Opcoes = styled.div`
 
   /* Quando o radio está selecionado */
   input[type='radio']:checked + label {
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
     transform: scale(1.05);
+    box-shadow: ${(props) =>
+      props.theme.kira
+        ? `0 0 10px ${props.theme.glowCrimson}`
+        : '0 0 8px rgba(0, 0, 0, 0.3)'};
+    ${(props) =>
+      props.theme.kira &&
+      css`
+        border-color: ${props.theme.crimson};
+      `}
   }
 `
 
@@ -94,7 +109,7 @@ export const CampoPrazo = styled.div`
     color: ${(props) => props.theme.textoBase};
     font-size: 14px;
     font-family: ${(props) => props.theme.fonteMono};
-    color-scheme: dark;
+    color-scheme: ${(props) => props.theme.colorScheme};
   }
 
   small {
@@ -106,17 +121,21 @@ export const CampoPrazo = styled.div`
 `
 
 export const Botao = styled.button`
-  background-color: ${(props) => props.theme.verde};
+  background-color: ${(props) => props.theme.acaoFundo};
   color: ${(props) => props.theme.branco};
-  border: none;
+  border: ${(props) =>
+    props.theme.kira ? `1px solid ${props.theme.crimson}` : 'none'};
   border-radius: 6px;
   padding: 12px 24px;
   font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-family: ${(props) => props.theme.fontePrincipal};
+  letter-spacing: ${(props) => (props.theme.kira ? '0.03em' : 'normal')};
 
   &:hover {
-    background-color: ${(props) => props.theme.amarelo2};
+    background-color: ${(props) => props.theme.acaoFundoHover};
     transform: scale(1.05);
     box-shadow: 0 0 10px ${(props) => props.theme.glowCrimson};
   }

@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components'
+import { breakpoints } from '../../styles/variaveis'
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -39,6 +40,10 @@ export const Modal = styled.div`
   color: #e5e2e1;
   font-family: 'Geist', 'Roboto', sans-serif;
   animation: ${revelar} 0.35s ease-out, ${brilho} 3s ease-in-out infinite;
+
+  @media (max-width: ${breakpoints.celular}) {
+    padding: 32px 20px;
+  }
 `
 
 export const Selo = styled.span`
@@ -63,6 +68,10 @@ export const Titulo = styled.h2`
 export const Frase = styled.blockquote`
   font-size: 22px;
   line-height: 1.5;
+
+  @media (max-width: ${breakpoints.celular}) {
+    font-size: 18px;
+  }
   font-weight: 600;
   font-style: italic;
   color: #f4f4f5;

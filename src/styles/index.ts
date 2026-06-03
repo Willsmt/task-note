@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components'
+import { breakpoints } from './variaveis'
 
 const EstiloGlobal = createGlobalStyle`
   * {
@@ -20,12 +21,26 @@ export const Container = styled.div`
   display: grid;
   grid-template-columns: 224px auto;
   min-height: 100vh;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    grid-template-columns: 1fr;
+  }
 `
 
 export const MainContainer = styled.main`
   padding: 0 40px;
   height: 100vh;
   overflow-y: scroll;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    height: auto;
+    overflow-y: visible;
+    padding: 0 24px;
+  }
+
+  @media (max-width: ${breakpoints.celular}) {
+    padding: 0 16px;
+  }
 `
 
 export const Titulo = styled.h2`

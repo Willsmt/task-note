@@ -19,29 +19,35 @@ type Props = {
 }
 
 /**
- * Cronômetro regressivo do Modo Kira, acoplado ao card da tarefa.
+ * Cronômetro regressivo acoplado ao card da tarefa.
  *
- * - Usa o `prazoFinal` absoluto (data + hora) escolhido pelo usuário; quando a
- *   tarefa não tem um, gera um prazo default a partir da duração padrão e o
- *   armazena no Redux (sobrevive ao reload via localStorage).
- * - Ao esgotar com a tarefa ainda pendente, marca fracasso, registra o alerta e
- *   dispara a Sentença do Caderno (id determinístico evita duplicatas).
+ * - A contagem é exibida sempre que houver um prazo: o `prazoFinal` absoluto
+ *   (data + hora) escolhido pelo usuário funciona inclusive com o Modo Kira
+ *   desligado.
+ * - Com o Modo Kira ativo, ganha duas camadas extras: gera um prazo default a
+ *   partir da duração padrão quando a tarefa não tem prazo próprio (persistido
+ *   no Redux/localStorage) e, ao esgotar com a tarefa pendente, marca fracasso,
+ *   registra o alerta e dispara a Sentença do Caderno (id determinístico evita
+ *   duplicatas).
  */
 const KiraTimer = ({ tarefaId, titulo, prazoFinal }: Props) => {
   const dispatch = useAppDispatch()
+  const kiraAtivo = useAppSelector((s) => s.kira.ativo)
   const prazoArmazenado = useAppSelector((s) => s.kira.prazos[tarefaId])
   const duracaoPadrao = useAppSelector((s) => s.kira.duracaoPadraoSegundos)
 
-  const prazoEfetivo = prazoFinal ?? prazoArmazenado
+  // Sem Kira, só conta se a tarefa tiver um prazo próprio; o prazo default é
+  // um recurso exclusivo do Modo Kira.
+  const prazoEfetivo = prazoFinal ?? (kiraAtivo ? prazoArmazenado : undefined)
 
   useEffect(() => {
-    if (!prazoFinal && !prazoArmazenado) {
+    if (kiraAtivo && !prazoFinal && !prazoArmazenado) {
       const novoPrazo = new Date(
         Date.now() + duracaoPadrao * 1000
       ).toISOString()
       dispatch(definirPrazoTarefa({ id: tarefaId, prazo: novoPrazo }))
     }
-  }, [prazoFinal, prazoArmazenado, duracaoPadrao, tarefaId, dispatch])
+  }, [kiraAtivo, prazoFinal, prazoArmazenado, duracaoPadrao, tarefaId, dispatch])
 
   const { segundosRestantes, expirado, formatado } =
     useContagemRegressiva(prazoEfetivo)
@@ -53,7 +59,9 @@ const KiraTimer = ({ tarefaId, titulo, prazoFinal }: Props) => {
   }, [prazoEfetivo])
 
   useEffect(() => {
-    if (expirado && prazoEfetivo && !fracassoProcessado.current) {
+    // A punição (fracasso/alerta/sentença) é exclusiva do Modo Kira; no modo
+    // normal o cronômetro apenas chega a "Tempo esgotado".
+    if (kiraAtivo && expirado && prazoEfetivo && !fracassoProcessado.current) {
       fracassoProcessado.current = true
 
       dispatch(marcarFracasso(tarefaId))
@@ -76,7 +84,7 @@ const KiraTimer = ({ tarefaId, titulo, prazoFinal }: Props) => {
       const { frase, autor } = sortearFrase()
       dispatch(exibirSentenca({ frase, autor }))
     }
-  }, [expirado, prazoEfetivo, tarefaId, titulo, dispatch])
+  }, [kiraAtivo, expirado, prazoEfetivo, tarefaId, titulo, dispatch])
 
   const critico = !expirado && segundosRestantes <= 60
 
@@ -87,10 +95,12 @@ const KiraTimer = ({ tarefaId, titulo, prazoFinal }: Props) => {
       title={
         prazoEfetivo
           ? `Prazo final: ${formatarPrazo(prazoEfetivo)}`
-          : 'Cronômetro do Modo Kira'
+          : 'Cronômetro da tarefa'
       }
     >
-      <S.Rotulo>{expirado ? 'Tempo esgotado' : 'Prazo Kira'}</S.Rotulo>
+      <S.Rotulo>
+        {expirado ? 'Tempo esgotado' : kiraAtivo ? 'Prazo Kira' : 'Prazo'}
+      </S.Rotulo>
       <span>{expirado ? '00:00' : formatado}</span>
     </S.Relogio>
   )

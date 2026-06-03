@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { breakpoints } from '../../styles/variaveis'
 
 export const Aside = styled.aside`
   padding: 16px;
@@ -6,6 +7,10 @@ export const Aside = styled.aside`
   height: 100vh;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    height: auto;
+  }
 `
 
 export const Filtros = styled.div`
@@ -13,6 +18,14 @@ export const Filtros = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-gap: 8px;
   margin-top: 16px;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: ${breakpoints.celular}) {
+    grid-template-columns: 1fr 1fr;
+  }
 `
 
 export const Usuario = styled.div`
@@ -76,18 +89,20 @@ export const BotaoKira = styled.button<{ $ativo: boolean }>`
 `
 
 export const BotaoVoltar = styled.button`
-  background-color: ${(props) => props.theme.verde};
+  background-color: ${(props) => props.theme.acaoFundo};
   color: ${(props) => props.theme.branco};
-  border: none;
+  border: ${(props) =>
+    props.theme.kira ? `1px solid ${props.theme.crimson}` : 'none'};
   border-radius: 6px;
   padding: 10px 20px;
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-family: ${(props) => props.theme.fontePrincipal};
 
   &:hover {
-    background-color: ${(props) => props.theme.amarelo2};
+    background-color: ${(props) => props.theme.acaoFundoHover};
     transform: scale(1.05);
     box-shadow: 0 0 8px ${(props) => props.theme.glowCrimson};
   }

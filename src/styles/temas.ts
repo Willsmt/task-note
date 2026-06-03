@@ -19,6 +19,14 @@ export type Tema = typeof variaveis & {
   glowCrimson: string
   fontePrincipal: string
   fonteMono: string
+  /** Esquema de cor dos controles nativos (ex.: ícone do datetime-local). */
+  colorScheme: 'light' | 'dark'
+  /** Fundo dos botões de ação primária (Nova tarefa, Voltar, Cadastrar). */
+  acaoFundo: string
+  /** Fundo desses botões no hover. */
+  acaoFundoHover: string
+  /** Verdadeiro quando o Modo Kira está ativo (habilita o visual obsidiana/crimson). */
+  kira: boolean
 }
 
 /** Tema claro original ("Task Note" padrão). */
@@ -34,7 +42,11 @@ export const temaPadrao: Tema = {
   crimson: variaveis.vermelho,
   glowCrimson: 'rgba(194, 54, 22, 0.4)',
   fontePrincipal: 'Roboto, sans-serif',
-  fonteMono: "'Roboto Mono', monospace"
+  fonteMono: "'Roboto Mono', monospace",
+  colorScheme: 'light',
+  acaoFundo: variaveis.verde,
+  acaoFundoHover: variaveis.amarelo2,
+  kira: false
 }
 
 /**
@@ -68,5 +80,9 @@ export const temaKira: Tema = {
   crimson: '#ff3131',
   glowCrimson: 'rgba(255, 49, 49, 0.45)',
   fontePrincipal: "'Geist', 'Roboto', sans-serif",
-  fonteMono: "'JetBrains Mono', 'Roboto Mono', monospace"
+  fonteMono: "'JetBrains Mono', 'Roboto Mono', monospace",
+  colorScheme: 'dark',
+  acaoFundo: '#c1121f', // crimson profundo (ação primária no Kira)
+  acaoFundoHover: '#ff3131',
+  kira: true
 }

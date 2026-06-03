@@ -1,12 +1,11 @@
 import styled from 'styled-components'
-import variaveis from '../../styles/variaveis'
 
 export const Form = styled.form`
   max-width: 547px;
   width: 100%;
   font-weight: bold;
   font-size: 14px;
-  color: ${variaveis.cinzaTexto};
+  color: ${(props) => props.theme.textoBase};
 
   display: flex;
   flex-direction: column;
@@ -16,14 +15,16 @@ export const Form = styled.form`
     margin: 16px 0;
     padding: 12px;
     border-radius: 6px;
-    border: 1px solid ${variaveis.cinzaMedio};
+    border: 1px solid ${(props) => props.theme.borda};
+    background-color: ${(props) => props.theme.superficieAlta};
+    color: ${(props) => props.theme.textoBase};
     font-size: 16px;
     font-family: inherit;
 
     &:focus {
       outline: none;
-      border-color: ${variaveis.verde};
-      box-shadow: 0 0 6px rgba(68, 189, 50, 0.4);
+      border-color: ${(props) => props.theme.verde};
+      box-shadow: 0 0 6px ${(props) => props.theme.glowCrimson};
     }
   }
 `
@@ -34,7 +35,7 @@ export const Opcoes = styled.div`
   p {
     margin-bottom: 6px;
     font-weight: bold;
-    color: ${variaveis.cinzaTitulo};
+    color: ${(props) => props.theme.textoForte};
   }
 
   input[type='radio'] {
@@ -50,20 +51,20 @@ export const Opcoes = styled.div`
     cursor: pointer;
     margin-right: 8px;
     transition: all 0.3s ease;
-    color: ${variaveis.branco}; /* texto branco por padrão */
+    color: ${(props) => props.theme.branco};
   }
 
   /* Cores específicas para cada label */
   label[for='urgente'] {
-    background-color: ${variaveis.vermelho};
+    background-color: ${(props) => props.theme.vermelho};
   }
 
   label[for='importante'] {
-    background-color: ${variaveis.amarelo2};
+    background-color: ${(props) => props.theme.amarelo2};
   }
 
   label[for='normal'] {
-    background-color: ${variaveis.verde};
+    background-color: ${(props) => props.theme.verde};
   }
 
   /* Quando o radio está selecionado */
@@ -73,9 +74,40 @@ export const Opcoes = styled.div`
   }
 `
 
+export const CampoPrazo = styled.div`
+  margin-bottom: 16px;
+
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: ${(props) => props.theme.textoForte};
+  }
+
+  input {
+    width: 240px;
+    max-width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid ${(props) => props.theme.borda};
+    background-color: ${(props) => props.theme.superficieAlta};
+    color: ${(props) => props.theme.textoBase};
+    font-size: 14px;
+    font-family: ${(props) => props.theme.fonteMono};
+    color-scheme: dark;
+  }
+
+  small {
+    display: block;
+    margin-top: 6px;
+    font-weight: 400;
+    color: ${(props) => props.theme.textoFraco};
+  }
+`
+
 export const Botao = styled.button`
-  background-color: ${variaveis.verde};
-  color: ${variaveis.branco};
+  background-color: ${(props) => props.theme.verde};
+  color: ${(props) => props.theme.branco};
   border: none;
   border-radius: 6px;
   padding: 12px 24px;
@@ -84,9 +116,9 @@ export const Botao = styled.button`
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: ${variaveis.amarelo2};
+    background-color: ${(props) => props.theme.amarelo2};
     transform: scale(1.05);
-    box-shadow: 0 0 10px rgba(68, 189, 50, 0.6);
+    box-shadow: 0 0 10px ${(props) => props.theme.glowCrimson};
   }
 
   &:active {

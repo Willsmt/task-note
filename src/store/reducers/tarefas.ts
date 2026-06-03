@@ -1,34 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import Tarefa from '../../models/Terefa'
 import * as enums from '../../utils/enums/Tarefa'
+import { mockTasks } from '../../mocks/tasks'
 
-type TarefasState = {
+export type TarefasState = {
   itens: Tarefa[]
 }
 const initialState: TarefasState = {
-  itens: [
-    {
-      id: 1,
-      descricao: 'Estudar JavaScript revendo o exercicio do modulo 7',
-      prioridade: enums.Prioridade.NORMAL,
-      status: enums.Status.CONCLUIDA,
-      titulo: 'Estudar JavaScript'
-    },
-    {
-      id: 2,
-      descricao: 'Estudar Python revendo o exercicio do modulo final',
-      prioridade: enums.Prioridade.IMPORTANTE,
-      status: enums.Status.PENDENTE,
-      titulo: 'Estudar Python'
-    },
-    {
-      id: 3,
-      descricao: 'Claude code, completar curso',
-      prioridade: enums.Prioridade.URGENTE,
-      status: enums.Status.PENDENTE,
-      titulo: 'Estudar IA'
-    }
-  ]
+  itens: mockTasks
 }
 const tarefasSlice = createSlice({
   name: 'tarefas',
@@ -77,11 +56,22 @@ const tarefasSlice = createSlice({
           ? enums.Status.CONCLUIDA
           : enums.Status.PENDENTE
       }
+    },
+    marcarFracasso: (state, action: PayloadAction<number>) => {
+      const indexDaTarefa = state.itens.findIndex(
+        (t) => t.id === action.payload
+      )
+      if (
+        indexDaTarefa >= 0 &&
+        state.itens[indexDaTarefa].status === enums.Status.PENDENTE
+      ) {
+        state.itens[indexDaTarefa].status = enums.Status.FRACASSOU
+      }
     }
   }
 })
 
-export const { remover, editar, cadastrar, alterarStatus } =
+export const { remover, editar, cadastrar, alterarStatus, marcarFracasso } =
   tarefasSlice.actions
 
 export default tarefasSlice.reducer

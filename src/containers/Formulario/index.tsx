@@ -1,19 +1,21 @@
 import { FormEvent, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { MainContainer, Titulo } from '../../styles/index'
 import { Campo } from '../../styles'
-import { Form, Opcoes, Opcao, Botao } from './styles'
+import { Form, Opcoes, Opcao, CampoPrazo, Botao } from './styles'
 import * as enums from '../../utils/enums/Tarefa'
 
 import { cadastrar } from '../../store/reducers/tarefas'
+import { useAppDispatch } from '../../store/hooks'
+import { inputLocalParaIso } from '../../utils/datas'
 
 const Formulario = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const [titulo, setTitulo] = useState('')
   const [descricao, setDescricao] = useState('')
   const [prioridade, setPrioridade] = useState(enums.Prioridade.NORMAL)
+  const [prazoFinal, setPrazoFinal] = useState('')
 
   const cadastrarTarefa = (e: FormEvent) => {
     e.preventDefault()
@@ -23,7 +25,8 @@ const Formulario = () => {
         titulo,
         prioridade,
         descricao,
-        status: enums.Status.PENDENTE
+        status: enums.Status.PENDENTE,
+        prazoFinal: inputLocalParaIso(prazoFinal)
       })
     )
     navigate('/')
@@ -63,6 +66,16 @@ const Formulario = () => {
             </Opcao>
           ))}
         </Opcoes>
+        <CampoPrazo>
+          <label htmlFor="prazo">Prazo final do Modo Kira (data e hora)</label>
+          <input
+            id="prazo"
+            type="datetime-local"
+            value={prazoFinal}
+            onChange={(e) => setPrazoFinal(e.target.value)}
+          />
+          <small>Opcional. Se vazio, usa o prazo padrão do Modo Kira.</small>
+        </CampoPrazo>
         <Botao type="submit">Cadastrar</Botao>
       </Form>
     </MainContainer>

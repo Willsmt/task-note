@@ -1,9 +1,12 @@
 import { useState, useEffect, ChangeEvent } from 'react'
-import { useDispatch } from 'react-redux'
 import * as S from './styles'
 import { remover, editar, alterarStatus } from '../../store/reducers/tarefas'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import KiraTimer from '../KiraTimer'
+import AlertBanner from '../AlertBanner'
 import TarefaClass from '../../models/Terefa'
 import * as enums from '../../utils/enums/Tarefa'
+import { isoParaInputLocal, inputLocalParaIso } from '../../utils/datas'
 
 type Props = TarefaClass
 
@@ -12,11 +15,20 @@ const Tarefa = ({
   prioridade,
   status,
   titulo,
-  id
+  id,
+  prazoFinal
 }: Props) => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
+  const kiraAtivo = useAppSelector((s) => s.kira.ativo)
+  const alerta = useAppSelector((s) =>
+    s.kira.alertas.find((a) => a.tarefaId === id)
+  )
   const [estaEditando, setEstaEditando] = useState(false)
   const [descricao, setDescricao] = useState('')
+  const [prazoEdit, setPrazoEdit] = useState('')
+
+  const pendente = status === enums.Status.PENDENTE
+  const fracassou = status === enums.Status.FRACASSOU
 
   useEffect(() => {
     if (descricaoOriginal.length > 0) {
@@ -24,9 +36,14 @@ const Tarefa = ({
     }
   }, [descricaoOriginal])
 
+  useEffect(() => {
+    setPrazoEdit(isoParaInputLocal(prazoFinal))
+  }, [prazoFinal])
+
   function cancelarEdicao() {
     setEstaEditando(false)
     setDescricao(descricaoOriginal)
+    setPrazoEdit(isoParaInputLocal(prazoFinal))
   }
 
   function alteraStatusTarefa(evento: ChangeEvent<HTMLInputElement>) {
@@ -39,7 +56,7 @@ const Tarefa = ({
   }
 
   return (
-    <S.Card>
+    <S.Card $fracassou={fracassou}>
       <label htmlFor={titulo}>
         <input
           type="checkbox"
@@ -61,11 +78,37 @@ const Tarefa = ({
         {status}
       </S.Tag>
 
+      {kiraAtivo && pendente && (
+        <KiraTimer tarefaId={id} titulo={titulo} prazoFinal={prazoFinal} />
+      )}
+
+      {kiraAtivo && alerta && (
+        <AlertBanner
+          titulo="Procrastinação detectada"
+          mensagem={alerta.mensagem}
+          selo={`Registrado às ${new Date(alerta.timestamp).toLocaleTimeString(
+            'pt-BR'
+          )}`}
+        />
+      )}
+
       <S.Descricao
         disabled={!estaEditando}
         value={descricao}
         onChange={(e) => setDescricao(e.target.value)}
       />
+
+      {estaEditando && (
+        <S.CampoPrazo>
+          <label htmlFor={`prazo-${id}`}>Prazo final (data e hora)</label>
+          <input
+            id={`prazo-${id}`}
+            type="datetime-local"
+            value={prazoEdit}
+            onChange={(e) => setPrazoEdit(e.target.value)}
+          />
+        </S.CampoPrazo>
+      )}
 
       <S.BarraAcoes>
         {estaEditando ? (
@@ -78,7 +121,8 @@ const Tarefa = ({
                     prioridade,
                     status,
                     titulo,
-                    id
+                    id,
+                    prazoFinal: inputLocalParaIso(prazoEdit)
                   })
                 )
                 setEstaEditando(false)

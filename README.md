@@ -6,6 +6,20 @@ Projeto desenvolvido no módulo de **React da EBAC**.
 
 ---
 
+## 📖 Sobre o projeto
+
+O **projeto original** é uma lista de tarefas proposta no módulo de React da EBAC. Nele foram praticados os fundamentos:
+
+- Componentização (componentes de apresentação × containers)
+- Gerenciamento de estado global com **Redux Toolkit**
+- Roteamento com **React Router** (lista ↔ cadastro)
+- Estilização com **styled-components**
+- CRUD de tarefas com **prioridades**, **status**, **busca** e **filtros**
+
+A partir dessa base, o projeto evoluiu com o **Modo Kira** — uma camada de produtividade "gamificada" criada para aprofundar temas mais avançados: **theming dinâmico**, **cronômetros** (`setInterval` em custom hook), **persistência no `localStorage`**, **responsividade** e organização de estado mais complexa. Essa evolução foi feita em uma **branch separada** (veja o fluxo de Git abaixo).
+
+---
+
 ## ✨ Funcionalidades
 
 ### Modo normal
@@ -60,6 +74,47 @@ npm run build
 
 # rodar os testes
 npm test
+```
+
+---
+
+## 🌿 Fluxo de desenvolvimento com Git
+
+O projeto usa um **fluxo de desenvolvimento paralelo com branches**, em vez de commitar tudo direto na `main`:
+
+| Branch | Papel |
+|---|---|
+| **`main`** | Projeto **original** da EBAC, estável — a lista de tarefas com CRUD, prioridades, filtros e rotas. |
+| **`kira-mode`** | Branch de **feature** onde o Modo Kira e todas as melhorias (responsividade, foco dos campos, ajustes de UI) foram desenvolvidos **sem afetar a `main`**. |
+
+```
+main          ●───●───●  (projeto original, estável)
+                       \
+kira-mode               ●───●───●───●  (Modo Kira + melhorias)
+```
+
+**Por que esse fluxo?**
+
+- 🛡️ Mantém a `main` sempre funcional, enquanto a feature nova é experimentada com segurança.
+- 🧪 Permite desenvolver e testar o Modo Kira de forma **isolada**.
+- 🔀 No fim, a branch pode ser integrada via **merge** ou **Pull Request**, com histórico claro do que cada parte adicionou.
+
+Comandos típicos usados nesse fluxo:
+
+```bash
+# criar e mudar para a branch da feature
+git checkout -b kira-mode
+
+# commitar o trabalho na branch
+git add .
+git commit -m "feat: implementa o Modo Kira"
+
+# enviar a branch para o GitHub
+git push -u origin kira-mode
+
+# (depois) integrar na main
+git checkout main
+git merge kira-mode
 ```
 
 ---

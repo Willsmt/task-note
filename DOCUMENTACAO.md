@@ -181,7 +181,66 @@ O reducer já protegia parte disso: `marcarFracasso` só transforma em `FRACASSO
 
 ---
 
-## 3. Conceitos-chave para revisar
+### 2.7. 🎯 Cor de foco dos campos por tema
+
+**Objetivo:** ao focar os campos do formulário (título, descrição e prazo final), a borda deveria ficar **verde no modo normal** e **vermelha no Modo Kira**.
+
+**O que mudamos:** criamos os tokens `foco` (cor da borda) e `focoGlow` (brilho) no tema:
+
+```ts
+// temaPadrao
+foco: verde, focoGlow: 'rgba(68, 189, 50, 0.45)'
+// temaKira
+foco: '#ff3131', focoGlow: 'rgba(255, 49, 49, 0.45)'
+```
+
+E aplicamos um `:focus` usando esses tokens no `Campo` (título), na `textarea` (descrição) e no input do `CampoPrazo`.
+
+**Detalhe importante:** como o título usa o componente `Campo` **compartilhado**, o campo "Buscar" da barra lateral ganhou o mesmo destaque — o que reforça a consistência visual ("tudo verde" no normal, "tudo crimson" no Kira). É o mesmo princípio de **design token semântico** da seção 2.3.
+
+---
+
+## 3. Versionamento e fluxo de Git
+
+O projeto usa um **fluxo de desenvolvimento paralelo com branches** — não se commita tudo direto na `main`.
+
+### 3.1. As branches
+
+| Branch | Papel |
+|---|---|
+| `main` | Projeto **original** da EBAC, estável (CRUD de tarefas, prioridades, filtros, rotas). |
+| `kira-mode` | Branch de **feature**: o Modo Kira e todas as melhorias desta etapa, isoladas da `main`. |
+
+```
+main          ●───●───●  (projeto original, estável)
+                       \
+kira-mode               ●───●───●───●  (Modo Kira + melhorias)
+```
+
+### 3.2. Por que trabalhar em branch separada
+
+- 🛡️ **Estabilidade:** a `main` continua funcionando enquanto a feature nova é experimentada.
+- 🧪 **Isolamento:** dá pra desenvolver, quebrar e testar o Modo Kira sem medo de afetar o que já estava pronto.
+- 🔀 **Integração controlada:** no fim, a branch entra na `main` via **merge** ou **Pull Request**, com histórico claro do que cada parte adicionou.
+- ↩️ **Reversibilidade:** se a feature não der certo, basta não integrar — a `main` permanece intacta.
+
+### 3.3. Comandos típicos
+
+```bash
+git checkout -b kira-mode          # cria e entra na branch da feature
+git add .
+git commit -m "feat: ..."          # commita na branch (não na main)
+git push -u origin kira-mode       # publica a branch no GitHub
+# ...depois de pronto e revisado:
+git checkout main
+git merge kira-mode                # integra a feature na main
+```
+
+> **Boas práticas de commit:** mensagens curtas e no presente, idealmente seguindo um padrão como _Conventional Commits_ (`feat:`, `fix:`, `refactor:`, `docs:`) — facilita ler o histórico depois.
+
+---
+
+## 4. Conceitos-chave para revisar
 
 - **Custom hooks** (`useContagemRegressiva`): extrair lógica com estado/efeitos para reutilizar.
 - **`useEffect` + cleanup**: sempre limpar timers/listeners no `return`.
@@ -194,7 +253,7 @@ O reducer já protegia parte disso: `marcarFracasso` só transforma em `FRACASSO
 
 ---
 
-## 4. Pontos de atenção / dívidas técnicas
+## 5. Pontos de atenção / dívidas técnicas
 
 Coisas notadas que ficam como sugestão de melhoria futura:
 

@@ -89,6 +89,7 @@ export const BotaoKira = styled.button<{ $ativo: boolean }>`
 `
 
 export const BotaoVoltar = styled.button`
+  width: 100%;
   background-color: ${(props) => props.theme.acaoFundo};
   color: ${(props) => props.theme.branco};
   border: ${(props) =>
